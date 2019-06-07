@@ -1,0 +1,12 @@
+Description=Gunicorn instance to serve myproject
+After=network.target
+
+[Service]
+User=nobody
+Group=nogroup
+WorkingDirectory=/opt/webprint
+Environment="PATH=/opt/webprint/venv/bin"
+ExecStart=/opt/webprint/venv/bin/gunicorn --workers 3 --bind unix:webprint.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

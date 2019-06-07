@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            socket.on('connect', function(data) {
+		    socket.emit('update', {data: 'foobar'});
+            });
+            socket.on('update', function(data) {
+		    document.getElementById("active").innerHTML = '<pre>' + data['queued'] + '</pre>';
+		    document.getElementById("completed").innerHTML = '<pre>' + data['completed'] + '</pre>';
+            });
+        </script>
+    </head>
+    <body>
+	{% if active %}
+        <p>active</p>
+	{% endif %}
+	<div id='active'><pre>{{active}}</pre></div>
+        <p>completed</p>
+	<div id='completed'><pre>{{completed}}</pre></div>
+    </body>
+</html>
